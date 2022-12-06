@@ -396,7 +396,7 @@ app.post("/searchpost", (req, res)=>{
   });
 // CONNECT
 var connection = mysql.createConnection({
-  host     : 'dpg-ce7ipvirrk049r5vrvpg-a',
+  host     : 'postgres://root:ybJQNef9uAjv01EInLVWPxEgstPWHbhq@dpg-ce7ipvirrk049r5vrvpg-a/travelcations',
   user     : 'root',
   password : 'ybJQNef9uAjv01EInLVWPxEgstPWHbhq',
   database : 'travelcations',
