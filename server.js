@@ -396,9 +396,9 @@ app.post("/searchpost", (req, res)=>{
   });
 // CONNECT
 var connection = mysql.createConnection({
-  host     : 'localhost',
+  host     : 'dpg-ce7ipvirrk049r5vrvpg-a',
   user     : 'root',
-  password : 'dlsu',
+  password : 'ybJQNef9uAjv01EInLVWPxEgstPWHbhq',
   database : 'travelcations',
 });
 
