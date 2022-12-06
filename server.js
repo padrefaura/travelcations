@@ -202,7 +202,7 @@ app.post("/signupuser", (req, res)=>{
   var crypt = bcrypt.hashSync(password, saltRounds);
 
   let data = {username: username, password: crypt, firstname: fname, lastname: lname, email: eaddress, bio: bio, postCount: 0, profilePic: image, dateJoin: dateJoin};
-  let sql = "INSERT INTO user SET ?";
+  let sql = "INSERT INTO public.user SET ?";
   let query = connection.query(sql, data, (err, results) =>{
       if(err) throw err;
       res.redirect('/');
