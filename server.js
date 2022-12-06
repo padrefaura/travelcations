@@ -49,10 +49,10 @@ app.post("/homepage1", function (req,res){
 //SESSION ROUTES
 app.get('/homePageLoggedIn/:username', (req, res) => {
   const username = '"' + req.params.username + '"';
-  var sql = "SELECT * FROM user WHERE username = "+ username;
+  var sql = "SELECT * FROM public.user WHERE username = "+ username;
   let query = connection.query(sql, (err, rows) => {
     if(err) throw err;
-    var sql = "SELECT * FROM post";
+    var sql = "SELECT * FROM public.post";
     let query = connection.query(sql, (err, rowz) => {
       if(err) throw err;
       res.render('HomePageLoggedIn', {
@@ -65,7 +65,7 @@ app.get('/homePageLoggedIn/:username', (req, res) => {
 
 app.get('/createpost/:username', (req, res) => {
   const username = '"' + req.params.username + '"';
-  var sql = "SELECT * FROM user WHERE username = "+ username;
+  var sql = "SELECT * FROM public.user WHERE username = "+ username;
   let query = connection.query(sql, (err, rows) => {
     if(err) throw err;
     res.render('CreatePost', {
@@ -76,7 +76,7 @@ app.get('/createpost/:username', (req, res) => {
 
 app.get('/myprofile/:username', (req, res) => {
   const username = '"' + req.params.username + '"';
-  var sql = 'SELECT * from user where username = '+ username;
+  var sql = 'SELECT * from public.user where username = '+ username;
   let query = connection.query(sql, (err, rows) => {
     if(err) throw err;
     if(rows[0].postCount == 0){
@@ -126,7 +126,7 @@ app.get('/user/:username', (req, res) => {
 
 app.get('/editprofile/:username', (req, res) => {
   const username = '"' + req.params.username + '"';
-  var sql = "SELECT * FROM user WHERE username = "+ username;
+  var sql = "SELECT * FROM public.user WHERE username = "+ username;
   let query = connection.query(sql, (err, rows) => {
     if(err) throw err;
     res.render('EditProfile', {
@@ -137,7 +137,7 @@ app.get('/editprofile/:username', (req, res) => {
 
 app.get('/editprofile/:username', (req, res) => {
   const username = '"' + req.params.username + '"';
-  var sql = "SELECT * FROM user WHERE username = "+ username;
+  var sql = "SELECT * FROM public.user WHERE username = "+ username;
   let query = connection.query(sql, (err, rows) => {
     if(err) throw err;
     res.render('EditProfile', {
@@ -148,7 +148,7 @@ app.get('/editprofile/:username', (req, res) => {
 
 app.get('/editprofilepic/:username', (req, res) => {
   const username = '"' + req.params.username + '"';
-  var sql = "SELECT * FROM user WHERE username = "+ username;
+  var sql = "SELECT * FROM public.user WHERE username = "+ username;
   let query = connection.query(sql, (err, rows) => {
     if(err) throw err;
     res.render('EditProfilePicture', {
@@ -159,7 +159,7 @@ app.get('/editprofilepic/:username', (req, res) => {
 
 app.get('/viewownpost/:postID', (req, res) => {
   const postID = '"' + req.params.postID + '"';
-  var sql = "SELECT * FROM post WHERE postID = "+ postID;
+  var sql = "SELECT * FROM public.post WHERE postID = "+ postID;
   let query = connection.query(sql ,(err, rows) => {
     if(err) throw err;
     res.render('OwnPost', {
@@ -170,7 +170,7 @@ app.get('/viewownpost/:postID', (req, res) => {
 
 app.get('/viewpost/:postID', (req, res) => {
   const postID = '"' + req.params.postID + '"';
-  var sql = "SELECT * FROM post WHERE postID = "+ postID;
+  var sql = "SELECT * FROM public.post WHERE postID = "+ postID;
   let query = connection.query(sql ,(err, rows) => {
     if(err) throw err;
     if(rows[0].author === currentUser.username){
@@ -215,7 +215,7 @@ app.post("/loginuser", (req, res)=>{
     let password = req.body.password;
     currentUser.username = username;
     currentUser.password = req.body.password;
-    connection.query('SELECT * FROM user WHERE username = ?', [username], function(err, rows) {
+    connection.query('SELECT * FROM public.user WHERE username = ?', [username], function(err, rows) {
     var user="";
         if (err) throw err;
         if (rows.length) {
@@ -223,7 +223,7 @@ app.post("/loginuser", (req, res)=>{
             if(bcrypt.compareSync(password, rows[0].password)){
               user = rows[0].username;
               currentUser.postCount = rows[0].postCount;
-              var sql = "SELECT * FROM post";
+              var sql = "SELECT * FROM public.post";
               let query = connection.query(sql, (err, rowz) => {
                 if(err) throw err;
                 res.render('HomePageLoggedIn', {
@@ -252,7 +252,7 @@ app.post("/createpost", upload.single('image'), (req, res)=>{
   var image = req.file.filename;
   currentUser.postCount +=1;
   newPost.postID = 0;
-  var sql = "SELECT * FROM post";
+  var sql = "SELECT * FROM public.post";
   let query = connection.query(sql, (err, rows) => {
     if(err) throw err;
     if (rows.length) {
@@ -268,10 +268,10 @@ app.post("/createpost", upload.single('image'), (req, res)=>{
       let sql = "UPDATE user SET postCount = ? WHERE username = ?";
       let query = connection.query(sql, data, (err, results) =>{
         if(err) throw err;
-        var sql = "SELECT * FROM user WHERE username = "+ "'"+ currentUser.username +"'";
+        var sql = "SELECT * FROM public.user WHERE username = "+ "'"+ currentUser.username +"'";
         let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
-        var sql = "SELECT * FROM post";
+        var sql = "SELECT * FROM public.post";
         let query = connection.query(sql, (err, rowz) => {
           if(err) throw err;
           res.render('HomePageLoggedIn', {
@@ -289,7 +289,7 @@ app.post("/createpost", upload.single('image'), (req, res)=>{
 app.post("/deletepost/:postid", (req, res)=>{
   currentUser.postCount -=1;
     let data = [req.params.postid];
-    let sql = "DELETE FROM post WHERE (postID=?)";
+    let sql = "DELETE FROM public.post WHERE (postID=?)";
     let query = connection.query(sql, data, (err, results) =>{
       if(err) throw err;
       //ADD ALERT/LINK TO POST
@@ -297,10 +297,10 @@ app.post("/deletepost/:postid", (req, res)=>{
       let sql = "UPDATE user SET postCount = ? WHERE username = ?";
       let query = connection.query(sql, data, (err, results) =>{
         if(err) throw err;
-        var sql = "SELECT * FROM user WHERE username = "+ "'"+ currentUser.username +"'";
+        var sql = "SELECT * FROM public.user WHERE username = "+ "'"+ currentUser.username +"'";
         let query = connection.query(sql, (err, rows) => {
         if(err) throw err;
-        var sql = "SELECT * FROM post";
+        var sql = "SELECT * FROM public.post";
         let query = connection.query(sql, (err, rowz) => {
           if(err) throw err;
           res.render('HomePageLoggedIn', {
@@ -320,7 +320,7 @@ app.post("/editprofileb", (req, res)=>{
   var lname = req.body.lname;
   var eaddress = req.body.eaddress;
   var bio = req.body.bio;
-  connection.query('SELECT * FROM user WHERE username = ?', [username], function(err, rows) {
+  connection.query('SELECT * FROM public.user WHERE username = ?', [username], function(err, rows) {
       if (err) throw err;
       if (rows.length) {
           console.log(bcrypt.compareSync(password, rows[0].password));
@@ -329,7 +329,7 @@ app.post("/editprofileb", (req, res)=>{
             let sql = "UPDATE user SET firstname = ?, lastname = ?, email = ?, bio = ? WHERE username = ?";
             let query = connection.query(sql, data, (err, results) =>{
             if(err) throw err;
-            var sql = "SELECT * FROM post";
+            var sql = "SELECT * FROM public.post";
               let query = connection.query(sql, (err, rowz) => {
                 if(err) throw err;
                 res.render('HomePageLoggedIn', {
@@ -350,7 +350,7 @@ app.post("/editprofileb", (req, res)=>{
 app.post("/editprofilepic", upload.single('pp'), (req, res)=>{
   var image = req.file.filename;
   let password = req.body.password;
-  connection.query('SELECT * FROM user WHERE username = ?', [currentUser.username], function(err, rows) {
+  connection.query('SELECT * FROM public.user WHERE username = ?', [currentUser.username], function(err, rows) {
       if (err) throw err;
       if (rows.length) {
           console.log(bcrypt.compareSync(password, rows[0].password));
@@ -359,7 +359,7 @@ app.post("/editprofilepic", upload.single('pp'), (req, res)=>{
             let sql = "UPDATE user SET profilePic = ? WHERE username = ?";
             let query = connection.query(sql, data, (err, results) =>{
               if(err) throw err;
-              var sql = "SELECT * FROM post";
+              var sql = "SELECT * FROM public.post";
               let query = connection.query(sql, (err, rowz) => {
                 if(err) throw err;
                 res.render('HomePageLoggedIn', {
@@ -379,7 +379,7 @@ app.post("/editprofilepic", upload.single('pp'), (req, res)=>{
 //SEARCH
 app.post("/searchpost", (req, res)=>{
   var search = req.body.search;
-    connection.query("SELECT * FROM post WHERE title LIKE '%"+search+"%' OR content LIKE '%"+search+"%'", function(err, rows) {
+    connection.query("SELECT * FROM public.post WHERE title LIKE '%"+search+"%' OR content LIKE '%"+search+"%'", function(err, rows) {
     if (err) res.redirect('/');
     if (rows.length) {
       res.render('SearchResults', {
