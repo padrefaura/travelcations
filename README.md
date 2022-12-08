@@ -18,15 +18,15 @@ regarding the different destinations in the Philippines.
 ### HOW TO USE
 
 1. Install the necessary packages needed for the website:
-** bcrypt
-** body-parser
-** EJS
-** express
-** cookie-session
-** multer
-** mysql
-** path
-** dotenv
+* bcrypt
+* body-parser
+* EJS
+* express
+* cookie-session
+* multer
+* mysql
+* path
+* dotenv
 2. Create a MySQL server and finish its setup.
 3. Create a database named "travelcations".
 4. Open the command prompt, type "node server.js, and press enter.
@@ -36,7 +36,7 @@ regarding the different destinations in the Philippines.
 
 Contributors names and contact info
 
-Boado, Seifer Rija\
-Caballero, Don John Daniel\
-Cabingan, Kurt Julian
+* Boado, Seifer Rija
+* Caballero, Don John Daniel
+* Cabingan, Kurt Julian
 
