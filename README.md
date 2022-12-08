@@ -38,5 +38,5 @@ Contributors names and contact info
 
 Boado, Seifer Rija\
 Caballero, Don John Daniel\
-Cabingan, Kurt Julian\
+Cabingan, Kurt Julian
 
