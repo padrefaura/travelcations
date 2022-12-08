@@ -34,7 +34,7 @@ regarding the different destinations in the Philippines.
 
 ## Authors
 
-Contributors names and contact info
+Contributors names
 
 * Boado, Seifer Rija
 * Caballero, Don John Daniel
